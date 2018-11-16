@@ -15,7 +15,7 @@ self: super: rec {
     # No tests included
     doCheck = false;
 
-    propagatedBuildInputs = with self.pythonPackages; [ pyqt5 ];
+    propagatedBuildInputs = with self.pythonPackages; [ pyqt5 pytz keyring dateutil ];
 
     meta = {
       homepage = https://pypi.org/project/BuildNotify/;
