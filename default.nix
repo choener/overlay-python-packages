@@ -20,7 +20,7 @@ self: super: rec {
     meta = {
       homepage = https://pypi.org/project/BuildNotify/;
       description = "ruise Control build monitor for Windows/Linux/Mac";
-      license = super.licenses.gpl3;
+      license = with super.stdenv.lib.licenses; [ gpl3 ];
       maintainers = [ ];
     };
   }; # buildnotify
