@@ -1,10 +1,14 @@
 self: super: rec {
-  pythonPackages = super.pythonPackages //
+
+  # python3 overlay with missing packages
+
+  python3Packages = super.python3Packages //
   {
     inherit buildnotify;
+    inherit mendeleev;
   };
 
-  buildnotify = super.pythonPackages.buildPythonPackage rec {
+  buildnotify = super.python3Packages.buildPythonPackage rec {
     name = "buildnotify-${version}";
     version = "1.0.4";
     src = super.pkgs.fetchurl {
@@ -15,7 +19,7 @@ self: super: rec {
     # No tests included
     doCheck = false;
 
-    propagatedBuildInputs = with self.pythonPackages; [ pyqt5 pytz keyring dateutil ];
+    propagatedBuildInputs = with self.python3Packages; [ pyqt5 pytz keyring dateutil ];
 
     meta = {
       homepage = https://pypi.org/project/BuildNotify/;
@@ -24,6 +28,27 @@ self: super: rec {
       maintainers = [ ];
     };
   }; # buildnotify
+
+  mendeleev = super.python3Packages.buildPythonPackage rec {
+    name = "mendeleev-${version}";
+    version = "0.5.1";
+    src = super.pkgs.fetchurl {
+      url = "https://github.com/lmmentel/mendeleev/archive/master.zip";
+      sha256 = "0n04rvpahpnm77kxcpfbdhfq45bm8958mbgdsa71ij5s5ks3kmn9";
+    };
+
+    # No tests included
+    doCheck = false;
+
+    propagatedBuildInputs = with self.python3Packages; [ sqlalchemy pyfiglet pandas colorama ];
+
+    meta = {
+      homepage = https://pypi.org/project/mendeleev/;
+      description = "";
+      license = with super.stdenv.lib.licenses; [ mit ];
+      maintainers = [ ];
+    };
+  }; # mendeleev
 
 }
 
