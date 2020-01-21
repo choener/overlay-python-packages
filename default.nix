@@ -4,11 +4,18 @@ self: super: rec {
 
   python3Packages = super.python3Packages //
   {
-    inherit buildnotify;
-    inherit mendeleev;
+    #inherit buildnotify;
+    #inherit mendeleev;
+    inherit py2neo;
+    inherit pygments231;
+    inherit neotime;
+    inherit neobolt;
   };
 
-  buildnotify = super.python3Packages.buildPythonPackage rec {
+  build = super.python3Packages.buildPythonPackage;
+  ps = self.python3Packages;
+
+  buildnotify = build rec {
     name = "buildnotify-${version}";
     version = "1.0.4";
     src = super.pkgs.fetchurl {
@@ -49,6 +56,65 @@ self: super: rec {
       maintainers = [ ];
     };
   }; # mendeleev
+
+  py2neo = build rec {
+    pname = "py2neo";
+    version = "4.3.0";
+    src = ps.fetchPypi {
+      inherit pname version;
+      sha256 = "08lj465d68zjbis7z9bjf4hh01phh2nynx3bm87qbqrnnsscq652";
+    };
+    propagatedBuildInputs = with ps; [ self.neo4j urllib3 pygments231 prompt_toolkit colorama pytz neotime click neobolt ];
+    doCheck = false;
+    meta = {
+      homepage = "https://py2neo.org/v4/";
+      description = "Py2neo is a client library and toolkit for working with Neo4j from within Python applications and from the command line";
+    };
+  }; # py2neo
+
+  pygments231 = build rec {
+    pname = "Pygments";
+    version = "2.3.1";
+    src = ps.fetchPypi {
+      inherit pname version;
+      sha256 = "0ji87g09jph8jqcvclgb02qvxasdnr9pzvk90rl66d90yqcxmyjz";
+    };
+    doCheck = false;
+    meta = {
+      homepage = "";
+      description = "";
+    };
+  }; # pygments 231
+
+  neotime = build rec {
+    pname = "neotime";
+    version = "1.7.4";
+    src = ps.fetchPypi {
+      inherit pname version;
+      sha256 = "1sv3fdnshlkcjy6xpdg01pr43n9bvqv356m75zg09q141yx7f12f";
+    };
+    doCheck = false;
+    propagatedBuildInputs = with ps; [ six pytz ];
+    meta = {
+      homepage = "";
+      description = "";
+    };
+  }; # neotime
+
+  neobolt = build rec {
+    pname = "neobolt";
+    version = "1.7.16";
+    src = ps.fetchPypi {
+      inherit pname version;
+      sha256 = "0p976amhabikdy14x8496ay6pp6v0a76af1nqap3kvg3kxkqfkna";
+    };
+    doCheck = false;
+    propagatedBuildInputs = with ps; [  ];
+    meta = {
+      homepage = "";
+      description = "";
+    };
+  }; # neotime
 
 }
 
