@@ -37,12 +37,17 @@ self: super: rec {
   }; # buildnotify
 
   mendeleev = super.python3Packages.buildPythonPackage rec {
-    name = "mendeleev-${version}";
+    pname = "mendeleev";
     version = "0.5.1";
-    src = super.pkgs.fetchurl {
-      url = "https://github.com/lmmentel/mendeleev/archive/master.zip";
-      sha256 = "0n04rvpahpnm77kxcpfbdhfq45bm8958mbgdsa71ij5s5ks3kmn9";
+    src = ps.fetchPypi {
+      inherit pname version;
+      sha256 = "0ij2g4pp3r84n6j379h7105zg33zdwh6j5an7g0slzip5nkd45w8";
     };
+    #src = super.pkgs.fetchurl {
+    #  url = "https://github.com/lmmentel/mendeleev/archive/master.zip";
+    #  #sha256 = "0n04rvpahpnm77kxcpfbdhfq45bm8958mbgdsa71ij5s5ks3kmn9";
+    #  sha256 = "114hh617v5iis2cp3dvkh13qzvrjnpr229d768rsak473p412af9";
+    #};
 
     # No tests included
     doCheck = false;
