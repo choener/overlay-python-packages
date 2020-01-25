@@ -1,17 +1,6 @@
-self: super: rec {
+self: super:
 
-  # python3 overlay with missing packages
-
-  python3Packages = super.python3Packages //
-  {
-    #inherit buildnotify;
-    #inherit mendeleev;
-    inherit py2neo;
-    inherit pygments231;
-    inherit neotime;
-    inherit neobolt;
-  };
-
+let
   build = super.python3Packages.buildPythonPackage;
   ps = self.python3Packages;
 
@@ -121,5 +110,16 @@ self: super: rec {
     };
   }; # neotime
 
+in  rec {
+  # python3 overlay with missing packages
+  python3Packages = super.python3Packages //
+  {
+    #inherit buildnotify;
+    #inherit mendeleev;
+    inherit py2neo;
+    inherit pygments231;
+    inherit neotime;
+    inherit neobolt;
+  };
 }
 
