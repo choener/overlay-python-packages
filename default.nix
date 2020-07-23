@@ -99,6 +99,77 @@ let
     };
   }; # py2neo
 
+  requests-html = build rec {
+    pname="requests-html";
+    version="0.10.0";
+    src = ps.fetchPypi {
+      inherit pname version;
+      sha256="0irr03k1f2vx7p1h1fgw0dmx1i6pssaq4dmvjh4ivywmxp7rx4ky";
+    };
+    propagatedBuildInputs=with ps; [ fake-useragent w3lib requests pyppeteer beautifulsoup4 bs4 parse pyquery ];
+  }; # requests-html
+
+  fake-useragent = build rec {
+    pname="fake-useragent";
+    version="0.1.11";
+    src = ps.fetchPypi {
+      inherit pname version;
+      sha256="0dfz3bpmjmaxlhda6hfgsac7afb65pljibi8zkp9gc0ffn5rj161";
+    };
+  }; # fake useragent
+
+  w3lib = build rec {
+    pname="w3lib";
+    version="1.22.0";
+    src = ps.fetchPypi {
+      inherit pname version;
+      sha256="1pv02lvvmgz2qb61vz1jkjc04fgm4hpfvaj5zm4i3mjp64hd1mha";
+    };
+    propagatedBuildInputs=with ps; [ six ];
+  }; # w3lib
+
+  pyppeteer = build rec {
+    pname="pyppeteer";
+    version="0.2.2";
+    src = ps.fetchPypi {
+      inherit pname version;
+      sha256="1s92izan7s3iffc85wpwi1qv9brcq0rlfqyi84wmpmg1dxk64g0m";
+    };
+    propagatedBuildInputs=with ps; [ websockets pyee urllib3 tqdm appdirs self.chromium ];
+    doCheck=false;
+  }; # pyppeteer
+
+  pyee = build rec {
+    pname="pyee";
+    version="7.0.2";
+    src = ps.fetchPypi {
+      inherit pname version;
+      sha256="1n5kmqbmjk5xk1yhdz04izns231v2n9s15dqvgvvn619ngnd2269";
+    };
+    propagatedBuildInputs=with ps; [ pytest vcversioner pytest-asyncio pytest-runner ];
+    doCheck=false;
+  }; # pyee
+
+  pytest-runner = build rec {
+    pname="pytest-runner";
+    version="5.2";
+    src = ps.fetchPypi {
+      inherit pname version;
+      sha256="0awll1bva5zy8cspsxcpv7pjcrdf5c6pf56nqn4f74vvmlzfgiwn";
+    };
+    propagatedBuildInputs=with ps; [ setuptools_scm ];
+    doCheck=false;
+  }; # pytest-runner
+
+  bs4 = build rec {
+    pname="bs4";
+    version="0.0.1";
+    src = ps.fetchPypi {
+      inherit pname version;
+      sha256="0fnxhql23ql6q5n64xjknx3sc3fm4vgpbw0z99p0qp6cswgymv1n";
+    };
+    propagatedBuildInputs=with ps; [ beautifulsoup4 ];
+  }; # bs4
 
 in {
 
@@ -110,6 +181,13 @@ in {
       inherit pygments231;
       inherit neotime;
       inherit neobolt;
+      inherit requests-html;
+      inherit fake-useragent;
+      inherit w3lib;
+      inherit pyppeteer;
+      inherit pyee;
+      inherit pytest-runner;
+      inherit bs4;
     };
   };
 
