@@ -1,8 +1,28 @@
 self: super:
 
+# comment
+
 let
   build = self.python3Packages.buildPythonPackage;
   ps = self.python3Packages;
+
+  asymmetree = build rec {
+    pname = "asymmetree";
+    version = "0.1.0";
+    src = ps.fetchPypi {
+      inherit pname version;
+      sha256 = "0i4xn6x6ikw00p9mknvbkqkr3fmqqyg710s0wsn7iy45f45d9902";
+    };
+    # No tests included
+    doCheck = false;
+    propagatedBuildInputs = with ps; [ numpy scipy matplotlib networkx ];
+    meta = {
+      homepage = https://github.com/david-schaller/AsymmeTree;
+      description = "";
+      license = []; # with super.stdenv.lib.licenses; [ mit ];
+      maintainers = [ ];
+    };
+  }; # asymmetree
 
   buildnotify = build rec {
     name = "buildnotify-${version}";
@@ -175,6 +195,7 @@ in {
 
   python3 = super.python3.override {
     packageOverrides = pself: psuper: {
+      inherit asymmetree;
       inherit buildnotify;
       inherit mendeleev;
       inherit py2neo;
